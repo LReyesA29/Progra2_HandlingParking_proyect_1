@@ -48,19 +48,37 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
     }
 
     // getters
-    public List<User> getUsers() { return users; }
-    public List<VehicleRate> getRates() { return rates; }
-    public List<Vehicle> getVehicles() { return vehicles; }
-    public List<RecordParking> getRecords() { return records; }
+    public List<User> getUsers() { 
+        return users; 
+    }
+    public List<VehicleRate> getRates() { 
+        return rates; 
+    }
+    public List<Vehicle> getVehicles() { 
+        return vehicles; 
+    }
+    public List<RecordParking> getRecords() { 
+        return records; 
+    }
 
     @Override
     public void loadFile(ETypeFile eTypeFile) {
         switch (eTypeFile) {
-            case SER: loadFileSerializate(); break;
-            case CSV: loadFileCSV(); break;
-            case XML: loadFileXML(); break;
-            case JSON: loadFileJSON(); break;
-            default: System.out.println("Tipo de archivo no soportado"); break;
+            case SER: 
+                loadFileSerializate(); 
+                break;
+            case CSV: 
+                loadFileCSV(); 
+                break;
+            case XML: 
+                loadFileXML(); 
+                break;
+            case JSON:  
+                loadFileJSON(); 
+                    break;
+            default:    
+                System.out.println("Tipo de archivo no soportado"); 
+                break;
         }
     }
 
@@ -134,7 +152,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
                     double price = Double.parseDouble(parts[1].trim());
                     rates.add(new VehicleRate(type, price));
                 } catch (NumberFormatException ex) {
-                    System.out.println("Skipping invalid rate line: " + line);
+                    System.out.println("Saltar  linea de tarifa no valida: " + line);
                 }
             }
         }
@@ -308,10 +326,9 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         return value == null ? "" : value.replace("\"", "").trim(); 
     }
     private String escape(String value) {
-        if (value == null){
+        if (value == null)
             return "";
-        } else{
             return value.replace("\\", "\\\\").replace("\"", "\\\""); 
-        }     
+            
     }
 }

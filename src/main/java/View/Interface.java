@@ -29,6 +29,7 @@ public class Interface {
 
     public void showMenu() {
         int option;
+        boolean ban = true;
         do {
             System.out.println("******  Parquadero 24Hrs   ******");
             System.out.println("1. Registrar Entrada");
@@ -73,9 +74,10 @@ public class Interface {
                 default:
                     System.out.println("Opcin invalida.");
             }
-        } while (true);
+        } while (ban);
     }
     public void showLogin(){
+        boolean ban = true;
          int option;
         do {
             System.out.println("1. Login");
@@ -84,6 +86,7 @@ public class Interface {
             switch (option) {
                 case 1:
                     validateLogin();
+                    ban = false;
                     break;
                 case 2:
                     System.exit(0);
@@ -91,15 +94,15 @@ public class Interface {
                 default:
                     System.out.println("Opcion invalida.");
             }
-        } while (true);
+        } while (ban);
     }
  
 
     private void validateLogin() {
         System.out.print("Usuario: ");
-        String user = sc.nextLine().trim();
+        String user = sc.nextLine();
         System.out.print("Contraseña: ");
-        String pass = sc.nextLine().trim();
+        String pass = sc.nextLine();
         User u = handling.findUser(user, pass);
         if (u == null) {
             System.out.println("Login fallido. Credenciales incorrectas.");
@@ -111,16 +114,16 @@ public class Interface {
 
     private void registerEntry() {
         System.out.print("Ingrese placa: ");
-        String plate = sc.nextLine().trim().toUpperCase();
+        String plate = sc.nextLine().toUpperCase();
         System.out.print("Ingrese tipo de vehículo ( Carro, Moto): ");
-        String type = sc.nextLine().trim();
+        String type = sc.nextLine();
         if (handling.findRateByType(type) == null) {
             System.out.println("Tipo no encontrado. Tarifas existentes:");
             showRates();
             return;
         }
         System.out.print("Fecha y hora (dd/MM/yyyy HH:mm) o Enter para ahora: ");
-        String input = sc.nextLine().trim();
+        String input = sc.nextLine();
         LocalDateTime when;
         try {
             when = input.isEmpty() ? LocalDateTime.now() : LocalDateTime.parse(input, DF_DATETIME);
@@ -135,9 +138,9 @@ public class Interface {
 
     private void registerExit() {
         System.out.print("Ingrese placa: ");
-        String plate = sc.nextLine().trim().toUpperCase();
+        String plate = sc.nextLine().toUpperCase();
         System.out.print("Fecha y hora de salida (dd/MM/yyyy HH:mm) o Enter para ahora: ");
-        String input = sc.nextLine().trim();
+        String input = sc.nextLine();
         LocalDateTime when;
         try {
             when = input.isEmpty() ? LocalDateTime.now() : LocalDateTime.parse(input, DF_DATETIME);
@@ -179,22 +182,22 @@ public class Interface {
             switch (option) {
                 case 1:
                     System.out.print("Fecha (dd/MM/yyyy): ");
-                    String d1 = sc.nextLine().trim();
+                    String d1 = sc.nextLine();
                     System.out.println("El " + d1 + " ingresaron " + service.countVehiclesByDate(d1) + " vehículos.");
                     break;
                 case 2:
                     System.out.print("Fecha y hora (dd/MM/yyyy HH): ");
-                    String d2 = sc.nextLine().trim();
+                    String d2 = sc.nextLine();
                     System.out.println("En " + d2 + " ingresaron " + service.countVehiclesByHour(d2) + " vehículos.");
                     break;
                 case 3:
                     System.out.print("Fecha (dd/MM/yyyy): ");
-                    String d3 = sc.nextLine().trim();
+                    String d3 = sc.nextLine();
                     System.out.println("Recaudación total el " + d3 + ": $" + String.format("%.2f", service.totalIncomeByDate(d3)));
                     break;
                 case 4:
                     System.out.print("Fecha y hora (dd/MM/yyyy HH): ");
-                    String d4 = sc.nextLine().trim();
+                    String d4 = sc.nextLine();
                     System.out.println("Recaudación total en " + d4 + ": $" + String.format("%.2f", service.totalIncomeByHour(d4)));
                     break;
                 case 5:
@@ -224,7 +227,7 @@ public class Interface {
                 break;
             case 3:
                 System.out.print("Ingrese placa: ");
-                String plate = sc.nextLine().trim().toUpperCase();
+                String plate = sc.nextLine().toUpperCase();
                 service.getAllRecords().stream().filter(r -> r.getLicensePlate().equalsIgnoreCase(plate)).forEach(r -> System.out.println(r));
                 break;
             case 4:
@@ -248,7 +251,7 @@ public class Interface {
 
     private int GetInt() {
         try {
-            int x = Integer.parseInt(sc.nextLine().trim());
+            int x = Integer.parseInt(sc.nextLine());
             return x;
         } catch (Exception e) {
             return -1;

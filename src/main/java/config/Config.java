@@ -19,7 +19,7 @@ public class Config {
     }
 
     private Config(){
-        
+
     }
 
     public static Config getInstance(){
@@ -34,16 +34,31 @@ public class Config {
         return "src/main/" + v;
     }
 
-    public static String getNameFileTXT() { return props.getProperty("app.config.path.file.name.txt", "data.txt"); }
-    public static String getNameFileCSV() { return props.getProperty("app.config.path.file.name.csv", "vehicleRate.csv"); }
-    public static String getNameFileJson() { return props.getProperty("app.config.path.file.name.json", "recordParking.json"); }
-    public static String getNameFileXML() { return props.getProperty("app.config.path.file.name.xml", "dataVehicle.xml"); }
-    public static String getNameFileSer() { return props.getProperty("app.config.path.file.name.ser", "loginUsers.ser"); }
+    public static String getNameFileTXT() {
+        return props.getProperty("app.config.path.file.name.txt", "data.txt"); 
+    }
+    public static String getNameFileCSV() { 
+        return props.getProperty("app.config.path.file.name.csv", "vehicleRate.csv"); 
+    }
+    public static String getNameFileJson() { 
+        return props.getProperty("app.config.path.file.name.json", "recordParking.json"); 
+    }
+    public static String getNameFileXML() { 
+        return props.getProperty("app.config.path.file.name.xml", "dataVehicle.xml"); 
+    }
+    public static String getNameFileSer() { 
+        return props.getProperty("app.config.path.file.name.ser", "loginUsers.ser"); 
+    }
 
     public static int getSizeParking() {
         String override = System.getProperty("app.config.sizeParking");
         if (override != null && !override.trim().isEmpty()) {
-            try { return Integer.parseInt(override); } catch(Exception e) {}
+            try { 
+                return Integer.parseInt(override); 
+            } catch(Exception e) 
+            {
+                
+            }
         }
         try {
             return Integer.parseInt(props.getProperty("app.config.sizeParking", "0"));
