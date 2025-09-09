@@ -1,5 +1,4 @@
-package main;
-
+package java;
 import View.Interface;
 import Persistence.HandlingPersistence;
 
