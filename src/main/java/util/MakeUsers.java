@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.User;
 
-/**
- * Utility to create loginUsers.ser with default users.
- */
 public class MakeUsers {
     public static void main(String[] args) {
         List<User> users = new ArrayList<>();

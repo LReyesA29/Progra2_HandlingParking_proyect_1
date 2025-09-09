@@ -203,7 +203,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
             lines.add("    <owner>" + v.getOwner() + "</owner>");
             lines.add("    <model>" + v.getModel() + "</model>");
             lines.add("    <color>" + v.getColor() + "</color>");
-            lines.add("    <pricePerHour>" + v.getPriceHour() + "</pricePerHour>");
+            lines.add("    <priceHour>" + v.getPriceHour() + "</priceHour>");
             lines.add("  </vehicle>");
         }
         lines.add("</vehicles>");

@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Config {
 
-    private static final String FILE = "src/main/resources/config/appconfig.properties";
+    private static final String FILE = "HandlingParking/resources/config/appconfig.properties";
     private static Properties props = new Properties();
     private static Config INSTANCE;
 
@@ -14,7 +14,7 @@ public class Config {
         try (FileInputStream fis = new FileInputStream(FILE)) {
             props.load(fis);
         } catch (IOException e) {
-            System.out.println("Warning: could not load config file: " + FILE + " -> " + e.getMessage());
+            System.out.println("No se pudo cargar el archivo de configuracion " + FILE + e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class Config {
                 return Integer.parseInt(override); 
             } catch(Exception e) 
             {
-                
+
             }
         }
         try {
