@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-/**
- * Business logic (reports, calculate totals) using HandlingPersistence unified handler.
- */
+
 public class RecordParkingService {
 
     private HandlingPersistence handling;
@@ -20,10 +18,12 @@ public class RecordParkingService {
 
     public RecordParkingService() {
         handling = HandlingPersistence.getInstance();
-        // handling.loadAll() is performed by singleton creation
+        
     }
 
-    /** Calculates total using rates and rounded-up hours */
+    //  Calcula el total utilizando tarifas y horas 
+    //   redondeada
+
     public double calculateTotal(RecordParking record) {
         VehicleRate rate = handling.findRateByType(record.getTypeVehicle());
         if (rate != null) {
@@ -34,7 +34,7 @@ public class RecordParkingService {
     }
 
     public void addRecord(RecordParking r) {
-        // calculate total then persist via handling
+        // Calcular  total y persistencia
         double total = calculateTotal(r);
         r.setTotal(total);
         if (handling.addRecord(r)) {
@@ -42,10 +42,10 @@ public class RecordParkingService {
         }
     }
 
-    // --- new API ---
+
     public boolean startParking(String plate, String typeVehicle, LocalDateTime entryTime) {
         if (handling.findOpenRecordByPlate(plate) != null) {
-            return false; // already parked
+            return false; // estacionado correctamente
         }
         if (getAvailableSpaces() <= 0) return false;
         String entry = entryTime.format(DF_DATETIME);
@@ -58,8 +58,8 @@ public class RecordParkingService {
     }
 
     /**
-     * Finish parking for a plate, set departure time and calculate total.
-     * Returns total amount or -1 if not found/error.
+     * Finalizar el estacionamiento  establece la hora de salida y clcula
+     * devuelve -1 si es error.
      */
     public double finishParking(String plate, LocalDateTime departureTime) {
         RecordParking r = handling.findOpenRecordByPlate(plate);
@@ -93,7 +93,7 @@ public class RecordParkingService {
     }
 
     public long countVehiclesByHour(String dateHour) {
-        // dateHour expected "dd/MM/yyyy HH"
+        // formato esperado "dd/mm/yyyy hh"
         String[] parts = dateHour.split(" ");
         if (parts.length < 2) return 0;
         LocalDate target = LocalDate.parse(parts[0], DF_DATE);

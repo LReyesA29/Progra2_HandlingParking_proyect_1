@@ -9,7 +9,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getUserName() { return userName; }
-    public String getPassword() { return password; }
-    @Override public String toString(){ return "User{"+userName+"}"; }
+    public String getUserName() {
+        return userName; 
+    }
+    public String getPassword() {
+        return password; 
+    }
+    @Override public String toString(){
+        return "Usuario:\n "+"Nombre"+userName; 
+    }
 }

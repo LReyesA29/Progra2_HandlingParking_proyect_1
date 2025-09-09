@@ -22,11 +22,7 @@ import org.w3c.dom.NodeList;
 import constants.CommonConstants;
 import config.Config;
 
-/**
- * Unified persistence handler. Provides load/dump for SER, CSV, XML, JSON,
- * and simple convenience find/add methods for common operations.
- * Implemented as a singleton so all services share the same in-memory lists.
- */
+
 public class HandlingPersistence extends FilePlain implements IActionsFile {
 
     private List<User> users = new ArrayList<>();
@@ -46,7 +42,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         return INSTANCE;
     }
 
-    /** For tests only: reset the singleton to force reload. */
+    
     public static void resetInstance() {
         INSTANCE = null;
     }
@@ -79,7 +75,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         }
     }
 
-    /** Loads all supported files into memory. */
+
     public void loadAll() {
         loadFile(ETypeFile.SER);
         loadFile(ETypeFile.CSV);
@@ -87,7 +83,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         loadFile(ETypeFile.JSON);
     }
 
-    /** Dumps all lists back to their files. */
+  
     public void dumpAll() {
         dumpFile(ETypeFile.SER);
         dumpFile(ETypeFile.CSV);
@@ -95,7 +91,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         dumpFile(ETypeFile.JSON);
     }
 
-    // --------- SERIALIZADO (Users) ----------
+
     @SuppressWarnings("unchecked")
     private void loadFileSerializate() {
         users.clear();
@@ -123,7 +119,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         }
     }
 
-    // --------- CSV (VehicleRate) ----------
+    
     private void loadFileCSV() {
         rates.clear();
         String path = Config.getPathFiles() + Config.getNameFileCSV();
@@ -151,7 +147,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         writer(path, lines);
     }
 
-    // --------- XML (Vehicle) ----------
+    
     private void loadFileXML() {
         vehicles.clear();
         String path = Config.getPathFiles() + Config.getNameFileXML();
@@ -189,14 +185,13 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
             lines.add("    <owner>" + v.getOwner() + "</owner>");
             lines.add("    <model>" + v.getModel() + "</model>");
             lines.add("    <color>" + v.getColor() + "</color>");
-            lines.add("    <pricePerHour>" + v.getPricePerHour() + "</pricePerHour>");
+            lines.add("    <pricePerHour>" + v.getPriceHour() + "</pricePerHour>");
             lines.add("  </vehicle>");
         }
         lines.add("</vehicles>");
         writer(path, lines);
     }
 
-    // --------- JSON (RecordParking) ----------
     private void loadFileJSON() {
         records.clear();
         String path = Config.getPathFiles() + Config.getNameFileJson();
@@ -246,7 +241,6 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         writer(path, content);
     }
 
-    // ------ convenience helpers ------
     public User findUser(String userName, String password) {
         return users.stream().filter(u -> u.getUserName().equals(userName) && u.getPassword().equals(password)).findFirst().orElse(null);
     }
@@ -285,7 +279,6 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
     }
 
     public boolean addRecord(RecordParking r) {
-        // allow adding new historical records but block if there is already an open record for this plate
         if (findOpenRecordByPlate(r.getLicensePlate()) == null) {
             records.add(r);
             return true;
@@ -298,7 +291,7 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
             RecordParking r = records.get(i);
             if (r.getLicensePlate().equalsIgnoreCase(updated.getLicensePlate()) && 
                 (r.getDepartureTime() == null || r.getDepartureTime().trim().isEmpty())) {
-                // update only the open record
+                // actualizar registro 
                 r.setDepartureTime(updated.getDepartureTime());
                 r.setTotal(updated.getTotal());
                 return true;
@@ -311,7 +304,14 @@ public class HandlingPersistence extends FilePlain implements IActionsFile {
         return records.removeIf(r -> r.getLicensePlate().equalsIgnoreCase(plate));
     }
 
-    // helpers
-    private String escapeValue(String value) { return value == null ? "" : value.replace("\"", "").trim(); }
-    private String escape(String value) { if (value == null) return ""; return value.replace("\\", "\\\\").replace("\"", "\\\""); }
+    private String escapeValue(String value) { 
+        return value == null ? "" : value.replace("\"", "").trim(); 
+    }
+    private String escape(String value) {
+        if (value == null){
+            return "";
+        } else{
+            return value.replace("\\", "\\\\").replace("\"", "\\\""); 
+        }     
+    }
 }

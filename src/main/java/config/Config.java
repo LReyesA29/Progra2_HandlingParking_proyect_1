@@ -4,10 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * Config singleton. Reads src/main/resources/config/appconfig.properties
- * Exposes getters used across the project. Allows overriding via system properties.
- */
 public class Config {
 
     private static final String FILE = "src/main/resources/config/appconfig.properties";
@@ -22,17 +18,15 @@ public class Config {
         }
     }
 
-    private Config(){}
+    private Config(){
+        
+    }
 
     public static Config getInstance(){
         if (INSTANCE == null) INSTANCE = new Config();
         return INSTANCE;
     }
 
-    /**
-     * Returns the base data path.
-     * Priority: system property 'app.config.path.files' -> properties file value -> default 'resources/data/'
-     */
     public static String getPathFiles() {
         String override = System.getProperty("app.config.path.files");
         String v = (override != null && !override.trim().isEmpty()) ? override : props.getProperty("app.config.path.files", "resources/data/");

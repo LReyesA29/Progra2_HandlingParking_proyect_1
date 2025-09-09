@@ -22,65 +22,80 @@ public class Interface {
 
     private static final DateTimeFormatter DF_DATETIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    public void showInfo() {
+    public void showInfo(){
+        showLogin();
+        showMenu();
+    }
+
+    public void showMenu() {
         int option;
         do {
-            System.out.println("******** PARKING MENU ********");
-            System.out.println("1. Login");
-            System.out.println("2. Registrar Entrada");
-            System.out.println("3. Registrar Salida");
-            System.out.println("4. Mostrar cupos disponibles");
-            System.out.println("5. Reportes");
-            System.out.println("6. Listar registros");
-            System.out.println("7. Mostrar tarifas");
-            System.out.println("8. Guardar todo en archivos");
-            System.out.println("9. Salir");
+            System.out.println("******  Parquadero 24Hrs   ******");
+            System.out.println("1. Registrar Entrada");
+            System.out.println("2. Registrar Salida");
+            System.out.println("3. Mostrar cupos disponibles");
+            System.out.println("4. Reportes");
+            System.out.println("5. Mostrar registros");
+            System.out.println("6. Mostrar tarifas");
+            System.out.println("7. Guardar todo en archivos");
+            System.out.println("8. Salir");
             System.out.println("*******************************");
             System.out.print("Seleccione una opción: ");
             option = GetInt();
             switch (option) {
                 case 1:
-                    doLogin();
+                    registerEntry();
                     break;
                 case 2:
-                    if (ensureLogged()) registerEntry();
+                    registerExit();
                     break;
                 case 3:
-                    if (ensureLogged()) registerExit();
-                    break;
-                case 4:
                     showAvailableSpaces();
                     break;
-                case 5:
-                    if (ensureLogged()) showReports();
+                case 4:
+                    showReports();
                     break;
-                case 6:
+                case 5:
                     listRecords();
                     break;
-                case 7:
+                case 6:
                     showRates();
                     break;
-                case 8:
+                case 7:
                     saveAll();
                     break;
+                case 8:
+                    System.out.println("Finalizando programa...");
+                    System.exit(0);
+                    break;
                 case 9:
-                    System.out.println("Finalizando programa.");
                     return;
                 default:
-                    System.out.println("Opción inválida.");
+                    System.out.println("Opcin invalida.");
             }
         } while (true);
     }
-
-    private boolean ensureLogged() {
-        if (currentUser == null) {
-            System.out.println("Debe iniciar sesión primero.");
-            return false;
-        }
-        return true;
+    public void showLogin(){
+         int option;
+        do {
+            System.out.println("1. Login");
+            System.out.println("2. Salir"); 
+            option = GetInt();
+            switch (option) {
+                case 1:
+                    validateLogin();
+                    break;
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opcion invalida.");
+            }
+        } while (true);
     }
+ 
 
-    private void doLogin() {
+    private void validateLogin() {
         System.out.print("Usuario: ");
         String user = sc.nextLine().trim();
         System.out.print("Contraseña: ");
@@ -97,7 +112,7 @@ public class Interface {
     private void registerEntry() {
         System.out.print("Ingrese placa: ");
         String plate = sc.nextLine().trim().toUpperCase();
-        System.out.print("Ingrese tipo de vehículo (ej: Carro, Moto): ");
+        System.out.print("Ingrese tipo de vehículo ( Carro, Moto): ");
         String type = sc.nextLine().trim();
         if (handling.findRateByType(type) == null) {
             System.out.println("Tipo no encontrado. Tarifas existentes:");
@@ -159,7 +174,7 @@ public class Interface {
             System.out.println("4. Recaudación por hora (dd/MM/yyyy HH)");
             System.out.println("5. Regresar");
             System.out.print("Seleccione: ");
-            option = readInt();
+            option = GetInt();
             sc.nextLine();
             switch (option) {
                 case 1:
@@ -196,7 +211,7 @@ public class Interface {
         System.out.println("3. Buscar por placa");
         System.out.println("4. Regresar");
         System.out.print("Seleccione: ");
-        int op = readInt();
+        int op = GetInt();
         sc.nextLine();
         switch (op) {
             case 1:

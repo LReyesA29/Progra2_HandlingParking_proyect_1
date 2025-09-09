@@ -4,15 +4,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * RecordParking uses extended date/time: "dd/MM/yyyy HH:mm"
- * getHoursParkedRoundedUp() returns billable hours (ceiling).
- */
+
 public class RecordParking implements Serializable {
     private String licensePlate;
     private String typeVehicle;
-    private String entryTime;      // "dd/MM/yyyy HH:mm"
-    private String departureTime;  // "dd/MM/yyyy HH:mm" or empty if open
+    private String entryTime;      
+    private String departureTime;  
     private double total;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -41,7 +38,7 @@ public class RecordParking implements Serializable {
         try { return departureTime == null || departureTime.trim().isEmpty() ? null : LocalDateTime.parse(departureTime, FORMATTER); } catch(Exception e) { return null; }
     }
 
-    /** Billable hours = ceil(minutes/60). If minutes <= 0 returns 0. */
+   
     public long getHoursParkedRoundedUp() {
         LocalDateTime e = getEntryDateTime();
         LocalDateTime d = getDepartureDateTime();
@@ -52,6 +49,8 @@ public class RecordParking implements Serializable {
     }
 
     @Override public String toString() {
-        return "RecordParking{" + licensePlate + "," + typeVehicle + "," + entryTime + "," + (departureTime==null ? "" : departureTime) + "," + total + "}";
+        return "Registro de Parqueadero :\n"+
+         "placa: "+ licensePlate + "tipo vehiculo" + typeVehicle + "fecha entrada: " + entryTime + "fecha de salida:" +
+          (departureTime==null ? "" : departureTime) + "total A pagar: " + total ;
     }
 }

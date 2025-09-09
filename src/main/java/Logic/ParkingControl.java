@@ -3,9 +3,7 @@ package Logic;
 import Model.RecordParking;
 import config.Config;
 
-/**
- * Parking control uses RecordParkingService to add records (so rate calculation is centralized).
- */
+
 public class ParkingControl {
 
     private int maxCapacity;
@@ -21,7 +19,6 @@ public class ParkingControl {
     }
 
     public boolean parkVehicle(RecordParking record) {
-        // convenience wrapper: use the record's entry datetime
         if (record == null) return false;
         return service.startParking(record.getLicensePlate(), record.getTypeVehicle(), record.getEntryDateTime());
     }

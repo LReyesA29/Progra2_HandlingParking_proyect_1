@@ -20,7 +20,7 @@ public class RecordParkingServiceTest {
     private Path tempDir;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         tempDir = Path.of("target/test-data/rpsvc");
         if (Files.exists(tempDir)) {
             Files.walk(tempDir).sorted((a,b)->b.compareTo(a)).forEach(p->p.toFile().delete());
@@ -37,12 +37,7 @@ public class RecordParkingServiceTest {
         HandlingPersistence.resetInstance();
     }
 
-    @AfterEach
-    public void cleanup() throws Exception {
-        System.clearProperty("app.config.path.files");
-        System.clearProperty("app.config.sizeParking");
-        HandlingPersistence.resetInstance();
-    }
+   
 
     @Test
     public void testStartAndFinishParkingCalculatesTotal() {
