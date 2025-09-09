@@ -1,0 +1,12 @@
+<vehicles>
+    <vehicle>
+        <plate>ABC123</plate>
+        <brand>Toyota</brand>
+        <model>Corolla</model>
+    </vehicle>
+    <vehicle>
+        <plate>XYZ987</plate>
+        <brand>Honda</brand>
+        <model>Civic</model>
+    </vehicle>
+</vehicles>
