@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Config {
 
-    private static final String FILE = "resources/config/appconfig.properties";
+    private static final String FILE = "HandlingParking/resources/config/appconfig.properties";
     private static Properties props = new Properties();
     private static Config INSTANCE;
 

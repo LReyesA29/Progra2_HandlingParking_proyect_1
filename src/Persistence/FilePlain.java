@@ -1,0 +1,49 @@
+package Persistence;
+
+import config.Config;
+import constants.CommonConstants;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class FilePlain {
+    protected Config config;
+
+    public FilePlain() { this.config = Config.getInstance(); }
+
+    private String readFile(String rutaNombre) {
+        StringBuilder contenido = new StringBuilder();
+        try (FileReader fr = new FileReader(rutaNombre);
+             BufferedReader br = new BufferedReader(fr)) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                contenido.append(linea).append(CommonConstants.BREAK_LINE);
+            }
+        } catch (IOException e) { 
+            /* prueba*/ }
+        return contenido.toString();
+    }
+
+    public void writeFile(String rutaNombre, String content) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaNombre))) {
+            writer.write(content);
+        } catch (IOException e) { 
+            
+         }
+    }
+
+    protected List<String> reader(String rutaNombre) {
+        List<String> output = new ArrayList<>();
+        StringTokenizer tokens = new StringTokenizer(this.readFile(rutaNombre), CommonConstants.BREAK_LINE);
+        while (tokens.hasMoreElements()) { output.add(tokens.nextToken()); }
+        return output;
+    }
+
+    protected void writer(String rutaNombre, List<String> file) {
+        StringBuilder strContent = new StringBuilder();
+        file.forEach(record -> strContent.append(record).append(CommonConstants.BREAK_LINE));
+        writeFile(rutaNombre, strContent.toString());
+    }
+}
