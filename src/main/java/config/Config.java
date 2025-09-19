@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Config {
 
-    private static final String FILE = "HandlingParking/resources/config/appconfig.properties";
+    private static final String FILE = "resources/config/appconfig.properties";
     private static Properties props = new Properties();
     private static Config INSTANCE;
 
@@ -28,10 +28,7 @@ public class Config {
     }
 
     public static String getPathFiles() {
-        String override = System.getProperty("app.config.path.files");
-        String v = (override != null && !override.trim().isEmpty()) ? override : props.getProperty("app.config.path.files", "resources/data/");
-        if (v.startsWith("src/") || v.startsWith("./") ) return v;
-        return "src/main/" + v;
+        return props.getProperty("app.config.path.files");
     }
 
     public static String getNameFileTXT() {
